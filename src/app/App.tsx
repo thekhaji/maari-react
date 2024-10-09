@@ -1,9 +1,10 @@
 import React from 'react';
-import { Navbar } from './components/header';
+import Navbar from './components/header';
 import { Footer } from './components/footer';
-import '../css/App.css';
-import { ButtonGroup, Button } from '@mui/material';
 
+import { ButtonGroup, Button } from '@mui/material';
+import '../css/App.css';
+import '../css/navbar.css'
 
 function App() {
   return (
