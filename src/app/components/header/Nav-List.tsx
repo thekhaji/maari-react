@@ -31,7 +31,7 @@ function NavList(){
             </li>
             
             {authMember ? (
-              <img src="" alt="" />
+              <img src={"/icons/default-user.svg"} alt="" style={{width: "50px", height: "50px", borderRadius: "24px"}} aria-haspopup={"true"}/>
             ) : 
             (
               <Box>
