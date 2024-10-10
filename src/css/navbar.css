@@ -1,8 +1,9 @@
-.wrapper{
-    background-color: var(--secondary-color);
-    
+.nav-wrapper{
+    background-color: #f8f8f8;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
-  .header{
+
+.nav-header{
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -10,7 +11,7 @@
     align-items: center;
     justify-content: space-between;
     overflow: hidden;
-  }
+}
 
 /* Logo */
   .logo-wrapper{
@@ -86,7 +87,7 @@
     }
   }
   .navlist-personBtn{
-    color: var(--text-color);
+    color: rgb(34, 34, 34);
   }
   
 /* Menu */

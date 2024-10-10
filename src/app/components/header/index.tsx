@@ -4,16 +4,15 @@ import NavList from "./Nav-List";
 import { Container } from "@mui/material";
 
 
+
 function Navbar() {
   return (
     <Container>
         <div className={"wrapper"}>
-            <div className={'container'}>
-                <div className={"header"}>
+                <div className={"nav-header"}>
                     <Logo />
                     <NavList/>
                 </div>
-            </div>
         </div>
     </Container>
     

@@ -3,12 +3,12 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 function NavList(){
-  const authMember = null ;
+  const authMember = true ;
   return (
     <div className="">
       <ul className={"navlist-wrapperList"}>
             <li className={"navlist-navListItem"}>
-                <NavLink className={"navlist-listLink"} activeClassName={"underline"} to="/blog">Блог</NavLink>
+                <NavLink className={"navlist-listLink"} activeClassName={"underline"} to="/vlogs">Блог</NavLink>
             </li>
             <li className={"navlist-navListItem"}>
                 <NavLink className={"navlist-listLink"} activeClassName={"underline"} to="/products">Продукты</NavLink>
