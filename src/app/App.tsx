@@ -3,17 +3,18 @@ import Navbar from './components/header';
 import Footer from './components/footer';
 import { Route, Switch } from 'react-router-dom';
 import { ButtonGroup, Button } from '@mui/material';
-import { HelpPage } from './screens/helpPage';
+import {HelpPage} from './screens/helpPage';
 import { HomePage } from './screens/homePage';
 import { OrdersPage } from './screens/ordersPage';
 import { ProductsPage } from './screens/productsPage';
 import { UserPage } from './screens/userPage';
-import { VlogsPage } from './screens/vlogsPage';
+import VlogsPage from './screens/vlogsPage';
 import '../css/App.css';
 import '../css/navbar.css';
 import '../css/footer.css';
 import '../css/home.css';
-import '../css/productCards.css';
+import '../css/product-cards.css';
+import '../css/vlogs.css';
 
 function App() {
   return (
