@@ -101,10 +101,23 @@
 .home-innerWrap{
     width: 100%;
     height: 700px;
-  
-    img{
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
+}
+.home-innerWrap img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.popular-product-swiper{
+  width: 100%;
+  height: 600px;
+  display: flex;
+  flex-direction: row;
+
+}
+.popular-product-slide{
+  width: 98%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}

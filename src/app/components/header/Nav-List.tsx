@@ -1,6 +1,7 @@
 import { Box, Button } from "@mui/material";
 import React from "react";
 import { NavLink } from "react-router-dom";
+import Basket from "./basket";
 
 function NavList(){
   const authMember = true ;
@@ -29,6 +30,8 @@ function NavList(){
             <li className={"navlist-navListItem"}>
                 <NavLink className={"navlist-listLink"} activeClassName={"underline"} to="/howtoorder">Как заказать?</NavLink>
             </li>
+
+            <Basket/>
             
             {authMember ? (
               <img src={"/icons/default-user.svg"} alt="" style={{width: "50px", height: "50px", borderRadius: "24px"}} aria-haspopup={"true"}/>

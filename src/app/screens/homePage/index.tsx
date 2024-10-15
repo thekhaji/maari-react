@@ -1,7 +1,8 @@
 import { Container } from "@mui/material";
 import Hero from "./Hero";
 import Brends from "./Brends";
-import Products from "../ProductsCard";
+import Products from "../productsCard";
+import PopularProducts from "./PopularProducts";
 
 export function HomePage() {
     return (<div>
@@ -12,6 +13,7 @@ export function HomePage() {
         <div className={"home-innerWrap"}>
           <img alt="banner" src="/icons/banner.png"/>
         </div>
-        <Products/>
+        <h2 className={"products-headline"}>Популярный Продукты</h2>
+        <PopularProducts/>
     </div>)
 }

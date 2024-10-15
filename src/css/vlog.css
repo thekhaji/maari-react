@@ -1,0 +1,31 @@
+.vlog-wrapper{
+    margin: 40px 0;
+  }
+.vlog-innerWrap{
+   display: flex;
+  }
+  
+.vlog-imgBox{
+    width: 500px !important;
+    margin-left: 30px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.vlog-imgBox img{
+    width: 100%;
+    width: 500px !important;
+}
+.vlog-textBox{
+   width: 70%;
+}
+.vlog-blogTitle{
+    font-size: 36px;
+    margin-bottom: 16px;
+}
+.vlog-blogSubTitle{
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+.vlog-blogPar{
+    margin-bottom: 12px;
+}

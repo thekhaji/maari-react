@@ -1,8 +1,13 @@
-import React from "react";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination } from 'swiper';
+import { Navigation } from 'swiper';
+import { Autoplay } from 'swiper';
+import React from 'react';
+import ProductCard from '../productsCard/ProductCard';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
-
-import ProductCard from "./ProductCard";
-import { Container } from "@mui/material";
 let productsArr = [
     {
       id:1,
@@ -133,22 +138,36 @@ let productsArr = [
 
   ]
 
-function Products(){
-  
-
-  return (
-    <div className={""}>
-      <div className={"products-wrapper"}>
-
-      {
-        productsArr.map((item)=>
-          <ProductCard item={item}/>
-        )
-      }
-      </div>
-    </div>
-  
-  )
-} 
-
-export default Products;
+export default function PopularProducts(){
+    return(
+        <div className={"container"}>
+            <Swiper
+            
+				className={'popular-product-swiper'}
+				slidesPerView={4}
+                
+				spaceBetween={15}
+				modules={[Autoplay, Navigation, Pagination]}
+				navigation={{
+					nextEl: '.swiper-trend-next',
+					prevEl: '.swiper-trend-prev',
+				}}
+                autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                  }}
+				pagination={{
+					el: '.swiper-trend-pagination',
+				}}
+			>
+				{productsArr.map((product) => {
+					return (
+						<SwiperSlide key={product.id} className='popular-product-slide'>
+							<ProductCard item={product}/>
+						</SwiperSlide>
+					);
+				})}
+			</Swiper>
+        </div>
+    );
+}

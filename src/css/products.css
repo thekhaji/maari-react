@@ -1,0 +1,41 @@
+.sub-subheaderList{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 30px;
+    justify-content: space-evenly;
+  }
+  .sub-subheaderItem{
+    list-style-type: none;
+    text-decoration: none;
+    margin: 0 12px;
+    color: rgb(34,34,34);
+    font-size: 14px;
+    position: relative;
+  }
+  .sub-wrapper{
+    width: 100%;
+    background-color: #f2d2d2;
+    height: 30px;
+  }
+  .sub-subLinks{
+    background: none;
+    border: none;
+    cursor: pointer;
+    list-style-type: none;
+    text-decoration: none;
+    color: rgb(34,34,34);
+    font-size: 14px;
+  }
+  .sub-linkBox{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  @media screen and (max-width:	1025px){
+    .sub-wrapper{
+      display: none;
+    }
+  }
+  
+  

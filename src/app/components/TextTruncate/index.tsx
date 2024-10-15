@@ -15,7 +15,7 @@ const TextTruncate: React.FC<TextTruncateProps> = ({ text, maxLength }) => {
 
   return (
     <div>
-      <p>
+
         {isExpanded ? text : truncateText(text, maxLength)}
         {text.length > maxLength && (
           <span 
@@ -25,7 +25,7 @@ const TextTruncate: React.FC<TextTruncateProps> = ({ text, maxLength }) => {
             {isExpanded ? " Show Less" : " ..."}
           </span>
         )}
-      </p>
+
     </div>
   );
 };
