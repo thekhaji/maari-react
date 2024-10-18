@@ -1,0 +1,126 @@
+.eachProdcut-wrapper{
+    margin-top: 40px;
+  }
+.eachProdcut-wrapperInner{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+}
+  .eachProdcut-imgBox{
+    width: 40%;
+    margin-right: 60px;
+    height: 516px;
+  }
+.eachProdcut-productImg{
+    border-radius: 30px;
+    height: 516px;
+    overflow: hidden;
+}
+.eachProdcut-productImg img{
+  width: 100%;
+  height: 516px;
+}
+
+.eachProdcut-productImg img{
+    transition: 0.3s ease all;
+}
+
+.eachProdcut-productImg img:hover{
+    transition: 0.3s ease all;
+      transform: scale(1.2);
+}
+.eachProdcut-productTitle{
+    color: var(--text-color);
+    margin-bottom: 10px;
+    font-size: 36px;
+  }
+.eachProdcut-productReview{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+  }
+.eachProdcut-reviews{
+    margin-left: 10px;
+}
+.eachProdcut-itemPrice{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 28px;
+    color: var(--text-color);
+}
+.eachProdcut-boxBtn{
+    background-color: var(--primary-color) !important;
+    color: rgb(255, 70, 101) !important;
+    font-weight: 600 !important;
+    padding: 8px 20px !important;
+}
+.eachProdcut-fabBtn{
+    background-color: var(--primary-color) !important;
+    color: rgb(255, 70, 101) !important;
+    width: 46px !important;
+    height: 46px !important;
+}
+.eachProdcut-navBtn:hover{
+    background: none !important;
+  }
+.eachProdcut-countBox{
+    margin: 12px 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: -20px;
+  }
+.eachProdcut-tabsBox{
+    margin-top: 20px;
+  }
+.eachProdcut-tabCon{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #ff485f;
+    font-weight: 600;
+    font-family: "Kurale", serif;
+  }
+  
+.eachProdcut-tabIcon{
+    margin-right: 10px;
+  }
+.eachProdcut-tabPanel{
+    height: 210px;
+    overflow-y: scroll;
+    font-family: "Kurale", serif;
+  }
+
+  .nextArrow{
+    padding: 10px 5px 10px 10px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 220px;
+    right: 10px;
+    background-color: var(--primary-color);
+    color: #ff485f;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    z-index: 50;
+  }
+  .prevArrow{
+    padding: 10px 5px 10px 10px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 220px;
+    left: 10px;
+    background-color: var(--primary-color);
+    color: #ff485f;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    z-index: 50;
+  }
+  
+  .transition { transition: .3s cubic-bezier(.3, 0, 0, 1.3) }

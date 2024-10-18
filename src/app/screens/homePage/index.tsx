@@ -1,7 +1,7 @@
 import { Container } from "@mui/material";
 import Hero from "./Hero";
 import Brends from "./Brends";
-import Products from "../productsCard";
+import Products from "../productsCard/Products";
 import PopularProducts from "./PopularProducts";
 
 export function HomePage() {
