@@ -10,19 +10,9 @@ import { pink } from '@mui/material/colors';
 import { Link } from "react-router-dom";
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
+import { Product } from "../../../libs/types/product";
+import { serverApi } from "../../../libs/config";
 
-interface Product {
-  id: number;
-  productName: string;
-  productBrend: string;
-  productCategory: string;
-  productStatus: string;
-  productReviews: number;
-  productPrice: string;
-  productImages: string[];
-  productDesc: string;
-  productCompound: string;
-}
 
 interface ProductCardProps {
   item: Product; 
@@ -41,9 +31,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
       backgroundColor: theme.palette.common.black,
     },
   }));
-  
+  const imagePath = `${serverApi}/${item.productImages[0]}`
   return (
-      <Link to={`/products/${item.id}`} className={"productCard-wrapperInner"}>
+      <Link to={`/products/${item._id}`} className={"productCard-wrapperInner"}>
             <div className={"productCard-wishlistBox"}>
             <BootstrapTooltip placement="left" title="Добавить в избранное" arrow
              slotProps={{
@@ -75,12 +65,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
               </IconButton>
             </BootstrapTooltip>
             </div>
-            <img className={"productCard-productImg"} alt="itemImg" src={item.productImages[0]}/>
+            <img className={"productCard-productImg"} alt="itemImg" src={imagePath}/>
             <h3 className={"productCard-productName"}>{item.productName}</h3>
-            <div className={"productCard-productReview"}>
-              <Rating name="read-only" value={5} readOnly />
-              <p className={"productCard-reviews"}>({item.productReviews})</p>
-            </div>
             <p className={"productCard-productPrice"}>{item.productPrice}</p>
             <div className={"productCard-hoverBox"}>
                   <h3 className={"productCard-productName"}>{item.productName}</h3>

@@ -11,6 +11,7 @@ import {createSelector} from "reselect" ;
 import {setProducts} from "./slice" ;
 import { retrieveProduct } from "./selector";
 import { Product } from "../../../libs/types/product";
+import ProductService from "../../services/ProductService";
 
 const actionDispatch = (dispatch: Dispatch) => ({
     setProducts: (data: Product[]) => dispatch(setProducts(data)),
@@ -18,16 +19,25 @@ const actionDispatch = (dispatch: Dispatch) => ({
 
 const productRetriever = createSelector(
     retrieveProduct,
-    (product) => ({product})
+    (products) => ({products})
 );
 
 export function HomePage() {
     const {setProducts} = actionDispatch(useDispatch());
-    const {product} = useSelector(productRetriever);
+    const {products} = useSelector(productRetriever);
 
     useEffect(()=>{
-        //Backend server data request => Data
-        //Slice: Data => Store
+        const product = new ProductService();
+        product.getProucts({
+            page: 1,
+            limit: 4,
+            order: "productPrice",
+        })
+        .then((data)=> {
+            setProducts(data);
+        })
+        .catch((err)=>console.log(err)
+        );
         
     }, []);
     return (<div>
