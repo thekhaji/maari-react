@@ -22,6 +22,13 @@ import NotesIcon from '@mui/icons-material/Notes';
 import HubOutlinedIcon from '@mui/icons-material/HubOutlined';
 import RateReviewOutlinedIcon from '@mui/icons-material/RateReviewOutlined';
 
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch } from "@reduxjs/toolkit";
+import { setChosenProduct,  setAgent} from "../productsPage/slice";
+import {createSelector} from "reselect";
+import { retrieveChosenProduct, retrieveAgent } from "../productsPage/selector";
+import { Product } from "../../../libs/types/product";
+
 let productsArr = [
     {
       id:1,
@@ -151,6 +158,28 @@ let productsArr = [
     },
 
   ]
+
+
+  
+/** REDUX SLICE AN SELECTOR **/
+const actionDispatch = (dispatch: Dispatch) => ({
+  setAgent: (data: Product[]) => dispatch(setAgent(data)),
+  setChosenProduct: (data: Product[]) => dispatch(setChosenProduct(data)),
+});
+
+const chosenProductRetriever = createSelector(retrieveChosenProduct, (chosenProduct) => ({
+  chosenProduct,
+}));  
+
+const agentRetriever = createSelector(retrieveAgent, (agent) => ({
+  agent,
+}));  
+
+
+
+
+
+
 
 interface ArrowProps {
   className?: string;
