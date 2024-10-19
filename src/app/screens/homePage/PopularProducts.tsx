@@ -13,7 +13,11 @@ import { useSelector } from "react-redux";
 import {createSelector} from "reselect" ;
 import { retrieveProduct } from "./selector";
 import { Product } from '../../../libs/types/product';
-  
+import { CartItem } from '../../../libs/types/search';
+
+interface PopularProductsProps {
+    onAdd: (item: CartItem) => void;
+}
   
   
 const productRetriever = createSelector(
@@ -22,8 +26,9 @@ const productRetriever = createSelector(
 );
 
 
-export default function PopularProducts(){
-  const {products} = useSelector(productRetriever);
+export default function PopularProducts(props: PopularProductsProps){
+	const {onAdd} = props;
+  	const {products} = useSelector(productRetriever);
     return(
         <div className={"container"}>
             <Swiper
@@ -48,7 +53,7 @@ export default function PopularProducts(){
 				{products.map((product: Product) => {
 					return (
 						<SwiperSlide key={product._id} className='popular-product-slide'>
-							<ProductCard item={product}/>
+							<ProductCard onAdd={onAdd} item={product}/>
 						</SwiperSlide>
 					);
 				})}

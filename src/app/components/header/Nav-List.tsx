@@ -2,8 +2,18 @@ import { Box, Button } from "@mui/material";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import Basket from "./basket";
+import { CartItem } from "../../../libs/types/search";
 
-function NavList(){
+interface NavListProps {
+  cartItems: CartItem[];
+  onAdd: (item: CartItem) => void;
+  onRemove: (item: CartItem) => void;
+  onDelete: (item: CartItem) => void;
+  onDeleteAll: () => void;
+}
+
+function NavList(props: NavListProps){
+  const {cartItems, onAdd, onRemove, onDelete, onDeleteAll} = props;
   const authMember = true ;
   return (
     <div className="">
@@ -31,7 +41,7 @@ function NavList(){
                 <NavLink className={"navlist-listLink"} activeClassName={"underline"} to="/howtoorder">Как заказать?</NavLink>
             </li>
 
-            <Basket/>
+            <Basket cartItems={cartItems} onAdd = {onAdd} onRemove = {onRemove} onDelete = {onDelete} onDeleteAll = {onDeleteAll}/>
             
             {authMember ? (
               <img src={"/icons/default-user.svg"} alt="" style={{width: "50px", height: "50px", borderRadius: "24px"}} aria-haspopup={"true"}/>

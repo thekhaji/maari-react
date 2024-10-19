@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from './components/header';
 import Footer from './components/footer';
 import { Route, Switch } from 'react-router-dom';
@@ -8,7 +8,8 @@ import { OrdersPage } from './screens/ordersPage';
 import { ProductsPage } from './screens/productsPage';
 import UserPage from './screens/userPage';
 import VlogsPage from './screens/vlogsPage';
-
+import useBasket from './hooks/useBasket';
+import { CartItem } from '../libs/types/search';
 import '../css/App.css';
 import '../css/navbar.css';
 import '../css/footer.css';
@@ -23,10 +24,14 @@ import '../css/user.css';
 import '../css/eachProduct.css';
 
 
+
+
 function App() {
+  const {cartItems, onAdd, onRemove, onDelete, onDeleteAll} = useBasket();
+
   return (
     <div className={"body"}>
-      <Navbar/>
+      <Navbar cartItems = {cartItems} onAdd = {onAdd} onRemove = {onRemove} onDelete = {onDelete} onDeleteAll = {onDeleteAll}/>
       <Switch>
         <Route path={"/howtoorder"}>
           <HelpPage/>
@@ -38,13 +43,13 @@ function App() {
           <UserPage/>
         </Route>
         <Route path={"/products"}>
-          <ProductsPage/>
+          <ProductsPage onAdd = {onAdd}/>
         </Route>
         <Route path={"/vlogs"}>
           <VlogsPage/>
         </Route>
         <Route path={"/"}>
-          <HomePage/>
+          <HomePage onAdd={onAdd}/>
         </Route>
       </Switch>
       <Footer/>

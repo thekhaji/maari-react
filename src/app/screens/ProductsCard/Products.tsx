@@ -15,6 +15,7 @@ import { retrieveProducts } from "../productsPage/selector";
 import { Product, ProductInquiry } from "../../../libs/types/product";
 import ProductService from "../../services/ProductService";
 import { Search } from "@mui/icons-material";
+import { CartItem } from "../../../libs/types/search";
 
 const headerItemsArr =[
   {
@@ -54,6 +55,10 @@ const headerItemsArr =[
   }
 ]
 
+interface ProductsProps {
+  onAdd: (item: CartItem) => void;
+}
+
 /** REDUX SLICE AN SELECTOR **/
 const actionDispatch = (dispatch: Dispatch) => ({
   setProducts: (data: Product[]) => dispatch(setProducts(data)),
@@ -62,7 +67,8 @@ const productsRetriever = createSelector(retrieveProducts, (products) => ({
   products,
 }));
 
-function Products(){
+function Products(props: ProductsProps){
+  const {onAdd} = props;
   const {setProducts} = actionDispatch(useDispatch());
   const {products} = useSelector(productsRetriever);
   const [productSearch, setProductSearch] = useState<ProductInquiry>({
@@ -115,7 +121,7 @@ function Products(){
       <div className={"products-wrapper"}>
         {
           products.map((item)=>
-            <ProductCard item={item}/>
+            <ProductCard item={item} onAdd={onAdd}/>
           )
         }
       </div>

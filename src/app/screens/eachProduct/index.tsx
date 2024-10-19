@@ -30,6 +30,7 @@ import { retrieveChosenProduct, retrieveAgent } from "../productsPage/selector";
 import { Product } from "../../../libs/types/product";
 import ProductService from "../../services/ProductService";
 import { serverApi } from "../../../libs/config";
+import { CartItem } from "../../../libs/types/search";
 
 let productsArr = [
     {
@@ -174,6 +175,9 @@ const chosenProductRetriever = createSelector(retrieveChosenProduct, (chosenProd
  
 
 
+interface EachProductProps {
+  onAdd: (item: CartItem) => void;
+}
 
 
 interface ArrowProps {
@@ -234,7 +238,10 @@ const PrevArrow: React.FC<ArrowProps> = ({ className, onClick }) => {
   );
 };
 
-function  EachProdcut(){
+
+
+function  EachProdcut(props: EachProductProps){
+  const {onAdd} = props;
   const {productId} = useParams<{productId: string}>();
   const {setChosenProduct} = actionDispatch(useDispatch());
   const {chosenProduct} = useSelector(chosenProductRetriever);
@@ -335,8 +342,18 @@ function  EachProdcut(){
                                 </TabPanel>
               </Box>
               <Box sx={{ '& > :not(style)': { mr: 2 } }}>
-                <Button className={"eachProdcut-boxBtn"} endIcon={<AddShoppingCartIcon />} variant="contained" >добавить в корзину</Button>
-                <Button className={"eachProdcut-boxBtn"} endIcon={<FavoriteBorderIcon />} variant="contained" >Добавить в избранное</Button>
+                <Button className={"eachProdcut-boxBtn"} endIcon={<AddShoppingCartIcon />} variant="contained" onClick = {(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log("Added to Basket");
+                    onAdd({
+                      _id: chosenProduct._id,
+                      quantity: count,
+                      name: chosenProduct.productName,
+                      price: chosenProduct.productPrice,
+                      image: chosenProduct.productImages[0],
+                    });
+                  }}>добавить в корзину</Button>
               </Box>
             </div>            
           </div>

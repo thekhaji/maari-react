@@ -12,14 +12,15 @@ import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import { Product } from "../../../libs/types/product";
 import { serverApi } from "../../../libs/config";
+import { CartItem } from "../../../libs/types/search";
 
 
 interface ProductCardProps {
-  item: Product; 
+  item: Product;
+  onAdd: (e: CartItem) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
-  
+const ProductCard: React.FC<ProductCardProps> = ({ item, onAdd }) => {
   const [count, setCount] = React.useState(1);
   const BootstrapTooltip = styled(({ className, ...props }: TooltipProps) => (
     <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -36,7 +37,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
       <Link to={`/products/${item._id}`} key={item._id} className={"productCard-wrapperInner"}>
             <div className={"productCard-wishlistBox"}>
             <BootstrapTooltip placement="left" title="Добавить в избранное" arrow
-             slotProps={{
+            slotProps={{
               popper: {
                 sx: {
                   [`&.${tooltipClasses.popper}[data-popper-placement*="bottom"] .${tooltipClasses.tooltip}`]:
@@ -59,7 +60,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
               },
             }}>
               <IconButton 
-               disableRipple
+              disableRipple
                   className={"productCard-navBtn"}>
                 <FavoriteIcon className={"productCard-navIcon"} sx={{ color: pink[100] }} />
               </IconButton>
@@ -77,7 +78,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
                   disableRipple
                   className={"productCard-navBtn"}
                   aria-label="reduce"
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.preventDefault();
                     setCount(Math.max(count - 1, 1));
                   }}>
                   <RemoveIcon fontSize="small" />
@@ -87,17 +89,29 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
                 disableRipple
                   className={"productCard-navBtn"}
                   aria-label="increase"
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.preventDefault();
                     setCount(count + 1);
                   }}>
                   <AddIcon fontSize="small" />
                 </Button>
                   </div>
-                  <Button className={"productCard-boxBtn"} variant="contained" >добавить в корзину</Button>
+                  <Button className={"productCard-boxBtn"} variant="contained" onClick = {(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log("Added to Basket");
+                    onAdd({
+                      _id: item._id,
+                      quantity: count,
+                      name: item.productName,
+                      price: item.productPrice,
+                      image: item.productImages[0],
+                    });
+                  }}>добавить в корзину</Button>
                   </div>        
             </div>
         </Link>
   )
-} 
+}
 
 export default ProductCard;

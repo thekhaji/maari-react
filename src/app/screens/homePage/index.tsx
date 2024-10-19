@@ -12,6 +12,11 @@ import {setProducts} from "./slice" ;
 import { retrieveProduct } from "./selector";
 import { Product } from "../../../libs/types/product";
 import ProductService from "../../services/ProductService";
+import { CartItem } from "../../../libs/types/search";
+
+interface HomePageProps {
+    onAdd: (item: CartItem) => void;
+}
 
 const actionDispatch = (dispatch: Dispatch) => ({
     setProducts: (data: Product[]) => dispatch(setProducts(data)),
@@ -22,7 +27,8 @@ const productRetriever = createSelector(
     (products) => ({products})
 );
 
-export function HomePage() {
+export function HomePage(props: HomePageProps) {
+    const {onAdd} = props;
     const {setProducts} = actionDispatch(useDispatch());
     const {products} = useSelector(productRetriever);
 
@@ -49,6 +55,6 @@ export function HomePage() {
           <img alt="banner" src="/icons/banner.png"/>
         </div>
         <h2 className={"products-headline"}>Популярный Продукты</h2>
-        <PopularProducts/>
+        <PopularProducts onAdd={onAdd}/>
     </div>)
 }
