@@ -1,5 +1,5 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
@@ -28,6 +28,8 @@ import { setChosenProduct,  setAgent} from "../productsPage/slice";
 import {createSelector} from "reselect";
 import { retrieveChosenProduct, retrieveAgent } from "../productsPage/selector";
 import { Product } from "../../../libs/types/product";
+import ProductService from "../../services/ProductService";
+import { serverApi } from "../../../libs/config";
 
 let productsArr = [
     {
@@ -163,20 +165,13 @@ let productsArr = [
   
 /** REDUX SLICE AN SELECTOR **/
 const actionDispatch = (dispatch: Dispatch) => ({
-  setAgent: (data: Product[]) => dispatch(setAgent(data)),
-  setChosenProduct: (data: Product[]) => dispatch(setChosenProduct(data)),
+  setChosenProduct: (data: Product) => dispatch(setChosenProduct(data)),
 });
 
 const chosenProductRetriever = createSelector(retrieveChosenProduct, (chosenProduct) => ({
   chosenProduct,
 }));  
-
-const agentRetriever = createSelector(retrieveAgent, (agent) => ({
-  agent,
-}));  
-
-
-
+ 
 
 
 
@@ -240,8 +235,15 @@ const PrevArrow: React.FC<ArrowProps> = ({ className, onClick }) => {
 };
 
 function  EachProdcut(){
-
-  let location = useLocation();
+  const {productId} = useParams<{productId: string}>();
+  const {setChosenProduct} = actionDispatch(useDispatch());
+  const {chosenProduct} = useSelector(chosenProductRetriever);
+  useEffect(()=>{
+    const product = new ProductService();
+    product.getProduct(productId)
+      .then((data) => setChosenProduct(data))
+      .catch((err) => console.log(err));
+  },[]);
 
   let settings = {
     dots: true,
@@ -263,60 +265,53 @@ function  EachProdcut(){
   const handleChange = (event: unknown, newValue: number) => {
     setValue(newValue);
   };
-
+  if(!chosenProduct) return null;
   return (
     <div className={"eachProdcut-wrapper"}>
-      {
-        productsArr.map((el,i)=>{
-          const pathId = location.pathname.split("/").at(-1);
-          if(el.id === Number(pathId)){
-            return(
-              <div key={i} className={"eachProdcut-wrapper"} >
-                  <div className="container">
-                    <div className={"eachProdcut-wrapperInner"}>
-                        <div className={"eachProdcut-imgBox"}>
-                            <Slider {...settings}>
-                              {
-                                el.productImages.map((img)=>
-                                  <div className={"eachProdcut-productImg"}>
-                                    <img alt="productImg" src={img}/>
-                                  </div>
-                                )
-                              }
-                              <img alt="productImg" src={el.productImages[0]}/>
-                            </Slider>
-                        </div>
-                        <div className={"eachProdcut-descBox"}>
-                              <h2 className={"eachProdcut-productTitle"}>{el.productName}</h2>
-                              <div className={"eachProdcut-productReview"}>
-                                <Rating name="read-only" value={5} readOnly />
-                                <p className={"eachProdcut-reviews"}>{el.productReviews} отзыва</p>
-                              </div>
-                              <p className={"eachProdcut-itemPrice"}>{el.productPrice}</p>
-                              <div className={"eachProdcut-countBox"}>
-                                <Button
-                                    disableRipple
-                                    className={"eachProdcut-navBtn"}
-                                    aria-label="reduce"
-                                    onClick={() => {
-                                      setCount(Math.max(count - 1, 1));
-                                    }}>
-                                  <RemoveIcon fontSize="small" />
-                                </Button>
-                                <Badge  badgeContent={count}> </Badge>
-                                <Button
-                                  disableRipple
-                                    className={"eachProdcut-navBtn"}
-                                    aria-label="increase"
-                                    onClick={() => {
-                                      setCount(count + 1);
-                                    }}>
-                              <AddIcon fontSize="small" />
-                                </Button>
-                                <p> Укажите количество товара !</p>
-                              </div>
-                             
-                             <Box className={"eachProdcut-tabsBox"}>
+      <div className={"eachProdcut-wrapper"} >
+        <div className="container">
+          <div className={"eachProdcut-wrapperInner"}>
+            <div className={"eachProdcut-imgBox"}>
+              <Slider {...settings}>
+                {
+                  chosenProduct.productImages.map((imgSrc, index)=>{
+                    const imagePath = `${serverApi}/${imgSrc}`;
+                    return(
+                      <div key={index} className={"eachProdcut-productImg"}>
+                        <img alt="productImg" src={imagePath}/>
+                      </div>
+                    );
+                  }
+                  )
+                }
+              </Slider>
+            </div>
+            <div className={"eachProdcut-descBox"}>
+              <h2 className={"eachProdcut-productTitle"}>{chosenProduct.productName}</h2>
+              <p className={"eachProdcut-itemPrice"}>{chosenProduct.productPrice}</p>
+              <div className={"eachProdcut-countBox"}>
+                <Button
+                  disableRipple
+                  className={"eachProdcut-navBtn"}
+                  aria-label="reduce"
+                  onClick={() => {
+                    setCount(Math.max(count - 1, 1));
+                  }}>
+                  <RemoveIcon fontSize="small" />
+                </Button>
+                <Badge  badgeContent={count}> </Badge>
+                <Button
+                  disableRipple
+                  className={"eachProdcut-navBtn"}
+                  aria-label="increase"
+                  onClick={() => {
+                    setCount(count + 1);
+                  }}>
+                  <AddIcon fontSize="small" />
+                </Button>
+                <p> Укажите количество товара !</p>
+              </div>
+              <Box className={"eachProdcut-tabsBox"}>
                                 <AppBar position="static" color="default">
                                   <Tabs
                                     value={value}
@@ -329,32 +324,24 @@ function  EachProdcut(){
                                     variant="fullWidth"
                                   >
                                     <Tab label={<div className={"eachProdcut-tabCon"}><NotesIcon className={"eachProdcut-tabIcon"}/>Описание</div>}{...a11yProps(0)} />
-                                    <Tab label={<div className={"eachProdcut-tabCon"}><HubOutlinedIcon className={"eachProdcut-tabIcon"}/>Состав</div>}{...a11yProps(1)} />
-                                    <Tab label={<div className={"eachProdcut-tabCon"}><RateReviewOutlinedIcon className={"eachProdcut-tabIcon"}/>Отзывы</div>}{...a11yProps(2)} />
+                                    
                                   </Tabs>
                                 </AppBar>
                                 <TabPanel value={value} index={0} dir={theme.direction} >
-                                  <div className={"eachProdcut-tabPanel"}>{el.productDesc}</div> 
-                                </TabPanel>
-                                <TabPanel value={value} index={1} dir={theme.direction}>
-                                <div className={"eachProdcut-tabPanel"}>{el.productCompound} </div>
+                                  <div className={"eachProdcut-tabPanel"}>{chosenProduct.productDesc}</div> 
                                 </TabPanel>
                                 <TabPanel value={value} index={2} dir={theme.direction}>
                                 <div className={"eachProdcut-tabPanel"}> </div>
                                 </TabPanel>
-                             </Box>
-                             <Box sx={{ '& > :not(style)': { mr: 2 } }}>
-                                <Button className={"eachProdcut-boxBtn"} endIcon={<AddShoppingCartIcon />} variant="contained" >добавить в корзину</Button>
-                                <Button className={"eachProdcut-boxBtn"} endIcon={<FavoriteBorderIcon />} variant="contained" >Добавить в избранное</Button>
-                             </Box>
-                        </div>
-                    </div>
-                  </div>
-              </div>
-            )
-          }
-        })
-      }
+              </Box>
+              <Box sx={{ '& > :not(style)': { mr: 2 } }}>
+                <Button className={"eachProdcut-boxBtn"} endIcon={<AddShoppingCartIcon />} variant="contained" >добавить в корзину</Button>
+                <Button className={"eachProdcut-boxBtn"} endIcon={<FavoriteBorderIcon />} variant="contained" >Добавить в избранное</Button>
+              </Box>
+            </div>            
+          </div>
+        </div>
+      </div>
     </div>
   )
 } 
