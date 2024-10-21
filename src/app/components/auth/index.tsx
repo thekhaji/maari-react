@@ -17,7 +17,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import '../../../css/login.css';
 import { T } from "../../../libs/types/common";
 import { Messages } from "../../../libs/config";
-import { MemberInput } from "../../../libs/types/member";
+import { LoginInput, MemberInput } from "../../../libs/types/member";
 import MemberService from "../../services/MemberService";
 import { sweetErrorHandling } from "../../../libs/sweetAlert";
 
@@ -69,7 +69,11 @@ const Login = (props: LoginModalProps)=>{
     const handlePasswordKeyDown = (e: T) => {
         if(e.key === "Enter" && signupOpen)
           handleSignupRequest().then();
-      }
+        else if(e.key === "Enter" && loginOpen)
+        {
+          handleLoginRequest().then();
+        }
+    }
 
     const handleSignupRequest = async () => {
         try{
@@ -96,6 +100,28 @@ const Login = (props: LoginModalProps)=>{
           }
     }
 
+    const handleLoginRequest = async() => {
+        try {
+          const isFulFill = memberNick!=="" && memberPassword!=="" ;
+          
+          if(!isFulFill) throw new Error(Messages.error3);
+    
+          const loginInput: LoginInput = {
+            memberNick: memberNick,
+            memberPassword: memberPassword,
+          };
+    
+          const member = new MemberService();
+    
+          const result = await member.login(loginInput);
+          handleLoginClose();
+        } catch (err) {
+          console.log(err);
+          handleLoginClose();  
+          sweetErrorHandling(err).then();
+        }
+      }
+
     return (
         <div>
             <Modal
@@ -113,7 +139,8 @@ const Login = (props: LoginModalProps)=>{
                     <h2 className={"loginTitle"}>Добро пожаловать!</h2>
                     <p className={"loginText"}>Пожалуйста введите свой логин и пароль чтобы зайти в свой личный кабинет</p>
                     <div className={"formBox"}>
-                    <TextField 
+                    <TextField
+                    onChange={handleUsername}
                     sx={{
                         '& .MuiOutlinedInput-root': {
                         '& fieldset': {
@@ -131,7 +158,9 @@ const Login = (props: LoginModalProps)=>{
                         '& label.Mui-focused': {
                         color: '#675f66',
                         }, width: '100%' , backgroundColor: "#fbf2f9", borderRadius: "6px"}} id="outlined-basic" label="Логин" variant="outlined" />
-                        <FormControl 
+                        <FormControl
+                        onKeyDown={handlePasswordKeyDown}
+                        onChange={handlePassword}
                         sx={{'& .MuiOutlinedInput-root': {
                             '& fieldset': {
                                 borderColor: '#5e5555bb', 
@@ -169,7 +198,7 @@ const Login = (props: LoginModalProps)=>{
                             />
                         </FormControl >
                         <Link className={"passwordReset"} to="/">Забыли пароль? </Link>
-                        <Link className={"loginBtn"} to="/"> <LoginIcon/> Войти в аккаунт </Link>
+                        <Link onClick={handleLoginRequest} className={"loginBtn"} to="/"> <LoginIcon/> Войти в аккаунт </Link>
                         <p className={"signInText"}>Если у вас нету акаунта то пройдите регистрацию прямо сейчас!</p>
                         <Link onClick={()=>{
                             handleLoginClose();
