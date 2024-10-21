@@ -20,6 +20,7 @@ import { Messages } from "../../../libs/config";
 import { LoginInput, MemberInput } from "../../../libs/types/member";
 import MemberService from "../../services/MemberService";
 import { sweetErrorHandling } from "../../../libs/sweetAlert";
+import { useGlobals } from "../../hooks/useGlobals";
 
 
 interface LoginModalProps {
@@ -38,6 +39,7 @@ const Login = (props: LoginModalProps)=>{
     const [memberPhone, setMemberPhone] = useState<string>("");
     const [memberPassword, setMemberPassword] = useState<string>("");
     const [memberConfirmPassword, setMemberConfirmPassword] = useState<string>("");
+    const {setAuthMember} = useGlobals();
 
 
     /** HANDLERS **/
@@ -91,7 +93,8 @@ const Login = (props: LoginModalProps)=>{
 
             const member = new MemberService();
             const result = await member.signup(signupInput);
-
+            
+            setAuthMember(result);
             handleSignupClose();  
           }catch(err){
             console.log(err);
@@ -112,8 +115,8 @@ const Login = (props: LoginModalProps)=>{
           };
     
           const member = new MemberService();
-    
           const result = await member.login(loginInput);
+          setAuthMember(result);
           handleLoginClose();
         } catch (err) {
           console.log(err);
