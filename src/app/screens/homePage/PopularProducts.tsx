@@ -3,7 +3,7 @@ import { Pagination } from 'swiper';
 import { Navigation } from 'swiper';
 import { Autoplay } from 'swiper';
 import React from 'react';
-import ProductCard from '../productsCard/ProductCard';
+import ProductCard from '../productsPage/ProductCard';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';

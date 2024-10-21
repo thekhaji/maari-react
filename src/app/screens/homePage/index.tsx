@@ -1,7 +1,7 @@
 import { Container } from "@mui/material";
 import Hero from "./Hero";
 import Brends from "./Brends";
-import Products from "../productsCard/Products";
+import Products from "../productsPage/Products";
 import PopularProducts from "./PopularProducts";
 import { useEffect } from "react";
 
@@ -13,6 +13,7 @@ import { retrieveProduct } from "./selector";
 import { Product } from "../../../libs/types/product";
 import ProductService from "../../services/ProductService";
 import { CartItem } from "../../../libs/types/search";
+import '../../../css/home.css';
 
 interface HomePageProps {
     onAdd: (item: CartItem) => void;

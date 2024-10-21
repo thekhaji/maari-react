@@ -10,24 +10,23 @@ import UserPage from './screens/userPage';
 import VlogsPage from './screens/vlogsPage';
 import useBasket from './hooks/useBasket';
 import { CartItem } from '../libs/types/search';
+import Login from './components/auth';
 import '../css/App.css';
 import '../css/navbar.css';
 import '../css/footer.css';
-import '../css/home.css';
-import '../css/product-cards.css';
-import '../css/vlogs.css';
-import '../css/vlog.css';
-import '../css/helpPage.css';
-import '../css/products.css';
-import '../css/order.css';
-import '../css/user.css';
-import '../css/eachProduct.css';
 
 
 
 
 function App() {
   const {cartItems, onAdd, onRemove, onDelete, onDeleteAll} = useBasket();
+  const [signupOpen, setSignupOpen] = useState<boolean>(false);
+  const [loginOpen, setLoginOpen] = useState<boolean>(false);
+
+  /** HANDLERS **/
+
+  const handleSignupClose = () => setSignupOpen(false);
+  const handleLoginClose = () => setLoginOpen(false);
 
   return (
     <div className={"body"}>
@@ -53,6 +52,14 @@ function App() {
         </Route>
       </Switch>
       <Footer/>
+
+
+      <Login
+        signupOpen={signupOpen}
+        loginOpen={loginOpen}
+        handleLoginClose={handleLoginClose}
+        handleSignupClose={handleSignupClose}
+      />
     </div>
   );
 }

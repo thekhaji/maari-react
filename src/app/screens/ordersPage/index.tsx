@@ -9,6 +9,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ProcessOrders from "./ProcessOrders";
 import PausedOrders from "./PausedOrders";
 import FinishedOrders from "./FinishedOrders";
+import '../../../css/order.css';
 
 
 

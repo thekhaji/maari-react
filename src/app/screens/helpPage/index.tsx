@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./howToOrder.module.scss";
+import '../../../css/helpPage.css';
 
 
 function HelpPage(){

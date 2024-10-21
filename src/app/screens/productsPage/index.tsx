@@ -1,8 +1,11 @@
 import { Container } from "@mui/material";
-import Products from "../productsCard/Products";
+import Products from "./Products";
 import { Route, Switch } from "react-router-dom";
 import EachProdcut from "../eachProduct";
 import { CartItem } from "../../../libs/types/search";
+import '../../../css/product-cards.css';
+import '../../../css/products.css';
+
 
 interface ProductsPageProps {
     onAdd: (item: CartItem) => void;

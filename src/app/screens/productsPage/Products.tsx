@@ -9,9 +9,9 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
-import { setProducts } from "../productsPage/slice";
+import { setProducts } from "./slice";
 import {createSelector} from "reselect";
-import { retrieveProducts } from "../productsPage/selector";
+import { retrieveProducts } from "./selector";
 import { Product, ProductInquiry } from "../../../libs/types/product";
 import ProductService from "../../services/ProductService";
 import { Search } from "@mui/icons-material";

@@ -26,12 +26,12 @@ function NavList(props: NavListProps){
             </li>
             {authMember ? (
               <li className={"navlist-navListItem"}>
-                <NavLink className={"navlist-listLink"} activeClassName={"underline"} to="/orders">Orders</NavLink>
+                <NavLink className={"navlist-listLink"} activeClassName={"underline"} to="/orders">Заказы</NavLink>
               </li>
             ) : null}
             {authMember ? (
               <li className={"navlist-navListItem"}>
-              <NavLink className={"navlist-listLink"} activeClassName={"underline"} to="/member-page">My Page</NavLink>
+              <NavLink className={"navlist-listLink"} activeClassName={"underline"} to="/member-page">Моя страница</NavLink>
           </li>
             ) : null}
             {/* <li className={"navlist-navListItem"}>
@@ -44,7 +44,7 @@ function NavList(props: NavListProps){
             <Basket cartItems={cartItems} onAdd = {onAdd} onRemove = {onRemove} onDelete = {onDelete} onDeleteAll = {onDeleteAll}/>
             
             {authMember ? (
-              <img src={"/icons/default-user.svg"} alt="" style={{width: "50px", height: "50px", borderRadius: "24px"}} aria-haspopup={"true"}/>
+              <img src={"/icons/default-user.svg"} alt="" style={{width: "40px", height: "40px", borderRadius: "24px", marginLeft: "10px"}} aria-haspopup={"true"}/>
             ) : 
             (
               <Box>
