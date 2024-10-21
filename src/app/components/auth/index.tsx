@@ -15,18 +15,32 @@ import Checkbox from '@mui/material/Checkbox';
 import { Modal } from "@material-ui/core";
 import Backdrop from "@material-ui/core/Backdrop";
 import '../../../css/login.css';
+import { T } from "../../../libs/types/common";
+import { Messages } from "../../../libs/config";
+import { MemberInput } from "../../../libs/types/member";
+import MemberService from "../../services/MemberService";
+import { sweetErrorHandling } from "../../../libs/sweetAlert";
 
 
 interface LoginModalProps {
     signupOpen: boolean;
     loginOpen: boolean;
+    setLoginOpen: (isOpen: boolean) => void;
+    setSignupOpen: (isOpen: boolean) => void;
     handleSignupClose: () => void;
     handleLoginClose: () => void;
 }
 
 const Login = (props: LoginModalProps)=>{
-    const { signupOpen, loginOpen, handleSignupClose, handleLoginClose } = props;
+    const { signupOpen, loginOpen, handleSignupClose, handleLoginClose, setSignupOpen, setLoginOpen } = props;
     const [showPassword, setShowPassword] = React.useState(false);
+    const [memberNick, setMemberNick] = useState<string>("");
+    const [memberPhone, setMemberPhone] = useState<string>("");
+    const [memberPassword, setMemberPassword] = useState<string>("");
+    const [memberConfirmPassword, setMemberConfirmPassword] = useState<string>("");
+
+
+    /** HANDLERS **/
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -34,10 +48,53 @@ const Login = (props: LoginModalProps)=>{
     const handleMouseUpPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
     };
-    const [isActive, setIsActive] = useState<boolean>(false);
-    const toggleStyle = () => {
-        setIsActive(!isActive);  
+    const handleUsername = (e: T) => {
+        setMemberNick(e.target.value);
     };
+    
+    const handlePhone = (e: T) => {
+        setMemberPhone(e.target.value);
+    };
+    
+    const handlePassword = (e: T) => {
+        console.log("Password:", e.target.value);
+        setMemberPassword(e.target.value);
+    };
+
+    const handleConfirmPassword = (e: T) => {
+        console.log("Confirm Password:", e.target.value);
+        setMemberConfirmPassword(e.target.value);
+    };
+
+    const handlePasswordKeyDown = (e: T) => {
+        if(e.key === "Enter" && signupOpen)
+          handleSignupRequest().then();
+      }
+
+    const handleSignupRequest = async () => {
+        try{
+            console.log("inputs: ", memberNick, memberPhone, memberPassword);
+            const isFulFill = memberNick!=="" && memberPhone!=="" && memberPassword!=="" ;
+            const isPasswordMatch = (memberPassword === memberConfirmPassword) ;
+            if(!isFulFill) throw new Error(Messages.error3);
+            if(!isPasswordMatch) throw new Error(Messages.error6);
+
+            const signupInput: MemberInput = {
+              memberNick: memberNick,
+              memberPhone: memberPhone,
+              memberPassword: memberPassword,
+            };
+
+            const member = new MemberService();
+            const result = await member.signup(signupInput);
+
+            handleSignupClose();  
+          }catch(err){
+            console.log(err);
+            handleSignupClose();  
+            sweetErrorHandling(err).then();
+          }
+    }
 
     return (
         <div>
@@ -114,7 +171,10 @@ const Login = (props: LoginModalProps)=>{
                         <Link className={"passwordReset"} to="/">Забыли пароль? </Link>
                         <Link className={"loginBtn"} to="/"> <LoginIcon/> Войти в аккаунт </Link>
                         <p className={"signInText"}>Если у вас нету акаунта то пройдите регистрацию прямо сейчас!</p>
-                        <Link onClick={toggleStyle} className={"loginBtn"} to="/"> <HowToRegIcon/> Зарегистрироваться </Link>
+                        <Link onClick={()=>{
+                            handleLoginClose();
+                            setSignupOpen(true);
+                        }} className={"loginBtn"} to="/"> <HowToRegIcon/> Зарегистрироваться </Link>
                     </div>
                 </div>
             </Modal>
@@ -134,7 +194,7 @@ const Login = (props: LoginModalProps)=>{
                     <p className={"loginText"}>Пожалуйста введите свои данные чтобы создать свой личный кабинет</p>
                     <div className={"formBox"}>
                         <div className={"formWrap"}>
-                        <TextField 
+                        <TextField onChange={handleUsername}
                     sx={{
                         '& .MuiOutlinedInput-root': {
                         '& fieldset': {
@@ -152,7 +212,7 @@ const Login = (props: LoginModalProps)=>{
                         '& label.Mui-focused': {
                         color: '#675f66',
                         }, width: '100%' , backgroundColor: "#fbf2f9", borderRadius: "6px"}} id="outlined-basic" label="Логин" variant="outlined" />
-                        <TextField 
+                        <TextField onChange={handlePhone}
                     sx={{
                         '& .MuiOutlinedInput-root': {
                         '& fieldset': {
@@ -172,7 +232,8 @@ const Login = (props: LoginModalProps)=>{
                         }, width: '100%' , backgroundColor: "#fbf2f9", borderRadius: "6px"}} id="outlined-basic" label="Телефон номер" variant="outlined" />
                         </div>
                         <div className={"formWrap"}>
-                        <FormControl 
+                        <FormControl
+                        onChange={handlePassword}
                     sx={{'& .MuiOutlinedInput-root': {
                         '& fieldset': {
                             borderColor: '#5e5555bb', 
@@ -209,7 +270,9 @@ const Login = (props: LoginModalProps)=>{
                             label="Password"
                         />
                         </FormControl >
-                        <FormControl 
+                        <FormControl
+                        onKeyDown = {handlePasswordKeyDown}
+                        onChange = {handleConfirmPassword}
                     sx={{'& .MuiOutlinedInput-root': {
                         '& fieldset': {
                             borderColor: '#5e5555bb', 
@@ -257,9 +320,12 @@ const Login = (props: LoginModalProps)=>{
                             },
                         }}
                         /> Запомнить меня</p>
-                        <Link className={"loginBtn"} to="/"> <LoginIcon/>Зарегистрироваться</Link>
+                        <Link onClick={handleSignupRequest} className={"loginBtn"} to="/"> <LoginIcon/>Зарегистрироваться</Link>
                         <p className={"signInText"}>Если у вас нету акаунта то пройдите регистрацию прямо сейчас!</p>
-                        <Link onClick={toggleStyle} className={"loginBtn"} to="/"> <HowToRegIcon/>Войти в аккаунт </Link>
+                        <Link onClick={()=> {
+                            handleSignupClose();
+                            setLoginOpen(true);
+                        }} className={"loginBtn"} to="/"> <HowToRegIcon/>Войти в аккаунт </Link>
                     </div>
                 </div>    
             </Modal>

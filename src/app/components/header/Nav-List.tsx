@@ -10,11 +10,12 @@ interface NavListProps {
   onRemove: (item: CartItem) => void;
   onDelete: (item: CartItem) => void;
   onDeleteAll: () => void;
+  setLoginOpen: (isOpen: boolean) => void;
 }
 
 function NavList(props: NavListProps){
-  const {cartItems, onAdd, onRemove, onDelete, onDeleteAll} = props;
-  const authMember = true ;
+  const { setLoginOpen, cartItems, onAdd, onRemove, onDelete, onDeleteAll} = props;
+  const authMember = false ;
   return (
     <div className="">
       <ul className={"navlist-wrapperList"}>
@@ -48,7 +49,7 @@ function NavList(props: NavListProps){
             ) : 
             (
               <Box>
-                <Button variant="contained" sx={{background: '#ee34e2', color: '#f8f8fff'}}>
+                <Button onClick={() => setLoginOpen(true)} variant="contained" sx={{background: '#ee34e2', color: '#f8f8fff'}}>
                 Login
                 </Button>
               </Box>

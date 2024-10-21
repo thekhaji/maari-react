@@ -10,17 +10,17 @@ interface NavbarProps {
   onRemove: (item: CartItem) => void;
   onDelete: (item: CartItem) => void;
   onDeleteAll: () => void;
-
+  setLoginOpen: (isOpen: boolean) => void;
 }
 
 function Navbar(props: NavbarProps) {
-  const { cartItems, onAdd, onRemove, onDelete, onDeleteAll} = props;
+  const { setLoginOpen, cartItems, onAdd, onRemove, onDelete, onDeleteAll} = props;
   return (
     <Container>
         <div className={"wrapper"}>
                 <div className={"nav-header"}>
                     <Logo />
-                    <NavList cartItems = {cartItems} onAdd = {onAdd} onRemove = {onRemove} onDelete = {onDelete} onDeleteAll = {onDeleteAll}/>
+                    <NavList setLoginOpen={setLoginOpen} cartItems = {cartItems} onAdd = {onAdd} onRemove = {onRemove} onDelete = {onDelete} onDeleteAll = {onDeleteAll}/>
                 </div>
         </div>
     </Container>

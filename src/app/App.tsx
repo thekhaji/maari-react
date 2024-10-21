@@ -30,7 +30,7 @@ function App() {
 
   return (
     <div className={"body"}>
-      <Navbar cartItems = {cartItems} onAdd = {onAdd} onRemove = {onRemove} onDelete = {onDelete} onDeleteAll = {onDeleteAll}/>
+      <Navbar setLoginOpen={setLoginOpen} cartItems = {cartItems} onAdd = {onAdd} onRemove = {onRemove} onDelete = {onDelete} onDeleteAll = {onDeleteAll}/>
       <Switch>
         <Route path={"/howtoorder"}>
           <HelpPage/>
@@ -57,6 +57,8 @@ function App() {
       <Login
         signupOpen={signupOpen}
         loginOpen={loginOpen}
+        setSignupOpen={setSignupOpen}
+        setLoginOpen={setLoginOpen}
         handleLoginClose={handleLoginClose}
         handleSignupClose={handleSignupClose}
       />
