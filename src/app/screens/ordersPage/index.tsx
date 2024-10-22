@@ -16,6 +16,7 @@ import { Order, OrderInquiry } from "../../../libs/types/order";
 import '../../../css/order.css';
 import OrderService from "../../services/OrderService";
 import { OrderStatus } from "../../../libs/enums/order.enum";
+import { useHistory } from "react-router-dom";
 import { useGlobals } from "../../hooks/useGlobals";
 
 
@@ -31,6 +32,8 @@ const actionDispatch = (dispatch: Dispatch) => ({
 export function OrdersPage() {
   const {setPausedOrders, setProcessOrders, setFinishedOrders} = actionDispatch(useDispatch());
   const { orderBuilder } = useGlobals();
+  const history = useHistory();
+  const {authMember} = useGlobals();
   const [value, setValue] = useState("1");
   const [orderInquiry, setOrderInquiry] = useState<OrderInquiry>({
     page: 1,
@@ -57,9 +60,11 @@ export function OrdersPage() {
 
   /** HANDLERS **/
 
-  const handleChange = (e: SyntheticEvent, newValue: string) => {
-    setValue(newValue) ;
-  }
+    const handleChange = (e: SyntheticEvent, newValue: string) => {
+      setValue(newValue) ;
+    }
+    
+    if(!authMember) history.push("/");
     return (
       <div className={"order-page"}>
         <Container className={"order-container"}>
