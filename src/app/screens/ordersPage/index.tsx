@@ -18,6 +18,8 @@ import OrderService from "../../services/OrderService";
 import { OrderStatus } from "../../../libs/enums/order.enum";
 import { useHistory } from "react-router-dom";
 import { useGlobals } from "../../hooks/useGlobals";
+import { serverApi } from "../../../libs/config";
+import { MemberType } from "../../../libs/enums/member.enum";
 
 
 /* REDUX SLICE & SELECTOR */
@@ -63,7 +65,7 @@ export function OrdersPage() {
     const handleChange = (e: SyntheticEvent, newValue: string) => {
       setValue(newValue) ;
     }
-    
+
     if(!authMember) history.push("/");
     return (
       <div className={"order-page"}>
@@ -71,7 +73,20 @@ export function OrdersPage() {
           <Stack className="order-left">
             <TabContext value={value}>
               <Box  className={"order-nav-frame"}>
-                <TabList onChange={handleChange} aria-label="lab API tabs example" className={"table-list"}>
+                <TabList sx={{
+                  width: "100%",
+                  backgroundColor: 'transparent', 
+                  color:'#ff485f',
+                  '& .MuiTab-root': { 
+                    
+                    color:'#ff485f',
+                  },
+                  '& .Mui-selected': {
+                    color: '#ff485f', 
+                  },
+                  '& .MuiTabs-indicator': {
+                    backgroundColor: '#ff485f',
+                  }} }onChange={handleChange} aria-label="lab API tabs example" className={"table-list"}>
                   <Tab label="PAUSED ORDERS" value="1" />
                   <Tab label="PROCESS ORDERS" value="2" />
                   <Tab label="FINISHED ORDERS" value="3" />
@@ -89,18 +104,22 @@ export function OrdersPage() {
             <Box className={"order-info-box"}>
               <Box className={"member-box"}>
                 <div className={"order-user-img"}>
-                  <img src={"/icons/default-user.svg"} className={"order-user-avatar"}/>
+                  <img src={authMember?.memberImage 
+                            ? `${serverApi}/${authMember.memberImage}` 
+                            : "/icons/default-user.svg"} className={"order-user-avatar"}/>
                   <div className={"order-user-icon-box"}>
-                    <img src={"/icons/user-badge.svg"} className={"order-user-prof-img"}/>
+                    <img src={authMember?.memberType === MemberType.AGENT
+                        ? "/icons/restaurant.svg"
+                        : "/icons/user-badge.svg"} className={"order-user-prof-img"}/>
                   </div>
                 </div>
-                <span className={"order-user-name"}>Andrew</span>
-                <span className={"order-user-prof"}>User</span>
+                <span className={"order-user-name"}>{authMember?.memberNick}</span>
+                <span className={"order-user-prof"}>{authMember?.memberType}</span>
               </Box>
               <Box className={"liner"}></Box>
               <Box className={"order-user-address"}>
                 <LocationOnIcon/>
-                <span className={"spec-address-txt"}>South Korea, Seoul</span>
+                <span className={"spec-address-txt"}>{authMember?.memberAddress ? authMember.memberAddress : "DO NOT EXIST!"}</span>
               </Box>
             </Box>
             <Box className={"order-info-box"}>

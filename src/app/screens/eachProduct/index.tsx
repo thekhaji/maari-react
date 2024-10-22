@@ -20,8 +20,6 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import NotesIcon from '@mui/icons-material/Notes';
 import HubOutlinedIcon from '@mui/icons-material/HubOutlined';
-import RateReviewOutlinedIcon from '@mui/icons-material/RateReviewOutlined';
-
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
 import { setChosenProduct,  setAgent} from "../productsPage/slice";

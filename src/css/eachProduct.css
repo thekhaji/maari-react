@@ -15,15 +15,13 @@
     border-radius: 30px;
     height: 516px;
     overflow: hidden;
+    width: 100%;
 }
 .eachProdcut-productImg img{
-  width: 100%;
+  width: 500px;
   height: 516px;
 }
 
-.eachProdcut-productImg img{
-    transition: 0.3s ease all;
-}
 
 .eachProdcut-productImg img:hover{
     transition: 0.3s ease all;
