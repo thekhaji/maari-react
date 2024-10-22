@@ -117,8 +117,6 @@ flex-direction: row;
 
 }
 .popular-product-slide{
-width: 98%;
-height: 100%;
-display: flex;
-flex-direction: row;
+  width: 98%;
+  height: 100%;
 }

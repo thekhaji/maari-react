@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 import { Link, NavLink } from "react-router-dom";
-import { Container, PaginationItem } from "@mui/material";
+import { Box, Container, PaginationItem } from "@mui/material";
 import { ProductCollection, ProductStatus } from "../../../libs/enums/product.enum";
 import Pagination from "@mui/material/Pagination";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -119,9 +119,11 @@ function Products(props: ProductsProps){
         </div>
       </div>
       <div className={"products-wrapper"}>
-        {
-          products.map((item)=>
+        { products.length !== 0 ?
+          (products.map((item)=>
             <ProductCard item={item} onAdd={onAdd}/>
+          )) : (
+            <Box className={"no-data"}>Products are not available!</Box>
           )
         }
       </div>

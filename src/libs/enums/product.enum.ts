@@ -12,4 +12,5 @@ export enum ProductCollection{
     KIDS = "KIDS",
     MEN = "MEN",
     ACCESSORY = "ACCESSORY",
+    ALL = "Все"
 }

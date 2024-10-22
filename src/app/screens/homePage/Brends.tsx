@@ -62,7 +62,7 @@ function Brends(){
         <div className={"brends-sliderContaner"}>
         <Slider {...settings}>
           {
-            brendsArr.map((item) =>  <div className={"brends-brendTypes"}><img alt="brendImg" src={item}/></div>)
+            brendsArr.map((item, index) =>  <div key={index} className={"brends-brendTypes"}><img alt="brendImg" src={item}/></div>)
           }
          
         </Slider>
