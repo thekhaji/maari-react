@@ -15,7 +15,7 @@ const Footer = ()=>{
   return (
     
         <div className={"footer-wrapper"}>
-            <Container>
+            <div className="container">
                 <div className={"footer-container"}>
                     <div className={"footer-wrapperInner"}>
                         <div className={"footer-logoBox"}>
@@ -57,7 +57,7 @@ const Footer = ()=>{
                     </div>
                     <p className={"copyRight"}>© 2024 MAARI Все права защищены.</p>
                 </div>
-            </Container>
+            </div>
         </div>
     
 

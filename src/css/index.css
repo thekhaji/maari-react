@@ -1,4 +1,5 @@
-#root{
+@import url('https://fonts.googleapis.com/css2?family=Buenard:wght@400;700&family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Kurale&family=Style+Script&display=swap');
+body {
   font-family: "Kurale", serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -6,7 +7,8 @@
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  background-color: #f8f8f8;
+  background-image: url(../../public/icons/bg.png);
+  background-size: contain;
 }
 
 code{
@@ -14,7 +16,7 @@ code{
     monospace;
 }
 .container{
-  width: 1300px;
+  width: 1350px;
   padding: 0px 10px;
   margin: 0 auto;
 }

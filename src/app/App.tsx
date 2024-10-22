@@ -52,7 +52,7 @@ function App() {
   };
 
   return (
-    <div className={"body"}>
+    <>
       <Navbar 
         setLoginOpen={setLoginOpen} 
         cartItems = {cartItems} 
@@ -65,6 +65,8 @@ function App() {
         handleCloseLogout = {handleCloseLogout}
         handleLogoutRequest = {handleLogoutRequest} 
       />
+          <div className={"body"}>
+      
       <Switch>
         <Route path={"/howtoorder"}>
           <HelpPage/>
@@ -97,6 +99,7 @@ function App() {
         handleSignupClose={handleSignupClose}
       />
     </div>
+    </>
   );
 }
 

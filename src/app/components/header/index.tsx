@@ -20,9 +20,9 @@ interface NavbarProps {
 function Navbar(props: NavbarProps) {
   const { setLoginOpen, cartItems, onAdd, onRemove, onDelete, onDeleteAll, anchorEl, handleCloseLogout, handleLogoutClick, handleLogoutRequest} = props;
   return (
-    <Container>
-        <div className={"wrapper"}>
-                <div className={"nav-header"}>
+    <>
+        <div className={"nav-wrapper"}>
+                <div className={"nav-header container"}>
                     <Logo />
                     <NavList 
                       setLoginOpen={setLoginOpen} 
@@ -38,7 +38,7 @@ function Navbar(props: NavbarProps) {
                     />
                 </div>
         </div>
-    </Container>
+    </>
     
   );
 }
